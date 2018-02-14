@@ -11,10 +11,8 @@ import auth from "./api/auth.routes";
 import status from "./api/status.routes";
 
 import localUploads from "./api/middleware/local-uploads.routes";
-
 import setupKoa from "./koa.config";
 import setUpSocketRoutes from "./api/sockets.routes";
-
 import connectToDb from "./db.config";
 import errorHandler from "./api/middleware/error-handler.middleware";
 

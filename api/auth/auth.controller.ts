@@ -10,25 +10,7 @@ import {errors} from "../errors/errors";
 class AuthController {
 
     async login(ctx, next) {
-        await passport.authenticate("local", async (err, user, info) => {
-            let error = err || info;
-
-            if (error) {
-                ctx.status = 401;
-                ctx.body = err;
-                return;
-            }
-
-            if (!user) {
-                ctx.status = 404;
-                ctx.body = {message: "Something went wrong, please try again."};
-                return;
-            }
-
-            let token = authService.signToken(user);
-            ctx.body = {token};
-            await next();
-        })(ctx, next);
+        return await authService.login(ctx, next);
     }
 
     async loginAs(ctx, next) {
@@ -73,7 +55,7 @@ class AuthController {
         await passport.authenticate("facebook", {
             session: false
         })(ctx, next);
-    };
+    }
 
     async setTokenCookie(ctx, next) {
         let user = ctx.state.user;
