@@ -1,4 +1,5 @@
 require("dotenv").config({silent: true});
+let swagger = require("swagger-koa");
 
 import config from "./configs/config";
 
@@ -39,6 +40,22 @@ if (config.uploads.strategy === "local") {
 if (config.websockets.useAdapter) {
     app._io.adapter(socketRedis({host: config.redis.host, port: config.redis.port}));
 }
+
+app.use(swagger.init({
+    apiVersion: "1.0",
+    swaggerVersion: "1.0",
+    swaggerURL: "/swagger",
+    swaggerJSON: "/api-docs.json",
+    swaggerUI: "./public/swagger/",
+    basePath: "http://localhost:3000/api",
+    info: {
+        title: "Koa api seed documentation",
+        description: "Koa Api seed"
+    },
+    apis: ["./build/api/auth/auth.controller.js"
+        // ,"./api/auth/auth.yml"
+    ]
+}));
 
 setUpSocketRoutes(io);
 

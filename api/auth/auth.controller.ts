@@ -9,9 +9,49 @@ import {errors} from "../errors/errors";
 
 class AuthController {
 
+    /**
+     * @swagger
+     * resourcePath: /auth
+     * description: All about API
+     */
+
+    /**
+     * @swagger
+     * path: /login
+     * operations:
+     *   -  httpMethod: POST
+     *      summary: Login with email and password
+     *      notes: Returns a user based on username
+     *      responseClass: User
+     *      nickname: login
+     *      parameters:
+     *        - email: email
+     *          description: Your username
+     *          paramType: query
+     *          required: true
+     *          dataType: string
+     *        - name: password
+     *          description: Your password
+     *          paramType: query
+     *          required: true
+     *          dataType: string
+     */
+
     async login(ctx, next) {
         return await authService.login(ctx, next);
     }
+
+    /**
+     * @swagger
+     * models:
+     *   User:
+     *     id: User
+     *     properties:
+     *       username:
+     *         type: String
+     *       password:
+     *         type: String
+     */
 
     async loginAs(ctx, next) {
         let details = ctx.details;
